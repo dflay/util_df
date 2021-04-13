@@ -5,6 +5,7 @@
 
 #include <cstdlib>
 #include <iostream> 
+#include <vector>
 #include <cmath>
 
 // #include "TH1F.h"
@@ -35,7 +36,8 @@ namespace util_df {
 	 void SetSampleFrequency(double f)  { fSampleFreq      = f; } 
 	 void SetZeroPaddingTime(double t)  { fZeroPaddingTime = t; } 
 
-	 int Transform(int N,double *f,double *F);                     // N = size of f; f = input (time domain), F = output (freq domain); returns number of FFT points  
+	 int Transform(std::vector<double> f,std::vector<double> &F);  // f = input (time domain), F = output (freq domain); returns NPTS of FFT  
+	 int Transform(int N,double *f,double *F);                     // N = size of f; f = input (time domain), F = output (freq domain); returns NPTS of FFT
 	 void InverseTransform(int N,double *F,double *f);             // N = size of f; F = input (freq domain), f = output (time domain) 
    
          // TH1F *GetHistogram(const char *hName,const char *title,int N,double F[]); 

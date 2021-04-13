@@ -27,11 +27,102 @@ namespace util_df {
    }
    //______________________________________________________________________________
    int FourierTransform::GetNextPowerOfTwo(int N){
-      double arg1 = log( (double)N )/log(2.);
-      double arg2 = ceil(arg1);
-      double NFT  = pow(2.,arg2);
-      int NFFT    = (int)NFT;
+      double arg1  = log( (double)N )/log(2.);
+      double arg2  = ceil(arg1);
+      double NFT   = pow(2.,arg2);
+      int NFFT     = (int)NFT;
+      const int NN = util_df::Constants::FTSIZE;
+      if(NN<NFFT){
+	 std::cout << "[FourierTransform]: ERROR! "   << std::endl;
+	 std::cout << "                    NFFT   = " << NFFT << std::endl;
+	 std::cout << "                    FTSIZE = " << NN   << std::endl;
+	 return -1;
+      }
+      // check size of NFFT 
+      const int N_true = (NN-2)/2. + 1;  // actual max of array size allowed since we do 2*i+2 in the loops below  
+      int N_attempt    = 2.*(NFFT-1) + 2; 
+      if(N_attempt>N_true){
+	 std::cout << "[FourierTransform]: ERROR! "   << std::endl;
+	 std::cout << "N_true = " << N_true << ", N_attempt = " << N_attempt << std::endl;
+	 NFFT = N_true; 
+      } 
       return NFFT;
+   }
+   //______________________________________________________________________________
+   int FourierTransform::Transform(std::vector<double> f,std::vector<double> &F){
+
+      const int N  = f.size();
+      const int NN = util_df::Constants::FTSIZE;
+
+      if(2*N>NN){
+	 std::cout << "[FourierTransform]: ERROR! N = " << N << " FTSIZE = " << NN << std::endl;
+	 return -1;
+      }
+
+      int NFFT = GetNFFT(N);
+      if(NFFT<0) return -1;  
+     
+      const int N3 = 2.*(NFFT-1) + 2;
+      if(N3>NN){
+	 std::cout << "[FourierTransform]: ERROR! Output vector size N3 = " << N3 << " FTSIZE = " << NN << std::endl;
+	 return -1;
+      }
+      double FF[N3];
+
+      if(fVerbosity>0){
+	 std::cout << "[FourierTransform]: N = " << N << ", NFFT = " << NFFT << std::endl;
+      } 
+
+      // fill complex array
+      for(int i=0;i<N;i++){
+	 fComplex[2*i+1] = f[i];  // real part
+	 fComplex[2*i+2] = 0;     // imaginary part 
+      }
+      // zero-padding: fill with zeroes after that 
+      for(int i=N;i<NFFT;i++){
+	 fComplex[2*i+1] = 0;      // real part
+	 fComplex[2*i+2] = 0;      // imaginary part 
+      }
+
+      if(fVerbosity>0) std::cout << "[FourierTransform]: Computing FFT..." << std::endl;
+
+      for(int i=0;i<NFFT;i++){
+	 FF[2*i+1] = fComplex[2*i+1];
+	 FF[2*i+2] = fComplex[2*i+2];
+      }
+      four1(1,NFFT,FF);
+
+      // prepare output vector 
+      F.resize(N3); 
+      for(int i=0;i<N3;i++) F[i] = 0; 
+
+      // normalization (converts to voltage) 
+      // for this, we need:
+      // F(w) = F( f(t) )*dt; dt = time step size 
+      // F(w) *= 1/(dt*NFFT) = F( f(t) )/NFFT  
+
+      double sf = 1./( (double)NFFT );   
+      for(int i=0;i<NFFT;i++){
+	 F[2*i+1] = sf*FF[2*i+1];
+	 F[2*i+2] = sf*FF[2*i+2];
+      }
+
+      // // check Parseval's theorem 
+      // double sum1=0,sum2=0;
+      // for(int i=0;i<NFFT;i++) sum1 += pow(fComplex[2*i+1],2) + pow(fComplex[2*i+2],2); 
+      // for(int i=0;i<NFFT;i++) sum2 += pow(F[2*i+1],2) + pow(F[2*i+2],2);              
+
+      // double pct = 100.*fabs(sum1-sum2)/(sum1+sum2);
+
+      // if(pct>1){
+      //    printf("[FourierTransform]: ERROR! Parseval's Theorem not satisfied!" << std::endl;
+      //    printf("                       time domain sum: %.7lf \t freq. domain sum: %.7lf \n",sum1,sum2);
+      // }
+
+      if(fVerbosity>0) std::cout << "[FourierTransform]: Done." << std::endl;
+
+      return NFFT; 
+
    }
    //______________________________________________________________________________
    int FourierTransform::Transform(int N,double *f,double *F){
@@ -41,20 +132,24 @@ namespace util_df {
       // F = output data [F(w)]
       // returns the number of FFT data points, NFFT 
 
-      int NFFT = GetNFFT(N);    // number of FFT data points 
-
       const int NN = util_df::Constants::FTSIZE;
+      int NFFT = GetNFFT(N);    // number of FFT data points 
+      if(NFFT<0) return -1; 
+
+      if(2*N>NN){
+	 std::cout << "[FourierTransform]: ERROR! N = " << N << " FTSIZE = " << NN << std::endl;
+	 return -1;
+      }
+     
+      const int N3 = 2.*(NFFT-1) + 2;
+      if(N3>NN){
+	 std::cout << "[FourierTransform]: ERROR! Output array size N3 = " << N3 << " FTSIZE = " << NN << std::endl;
+	 return -1;
+      }
 
       if(fVerbosity>0){
 	 std::cout << "[FourierTransform]: N = " << N << ", NFFT = " << NFFT << std::endl;
       } 
-
-      if(NN<NFFT){
-	 std::cout << "[FourierTransform]: ERROR! "   << std::endl;
-	 std::cout << "                    NFFT   = " << NFFT << std::endl;
-	 std::cout << "                    FTSIZE = " << NN   << std::endl;
-	 return -1;
-      }
 
       // fill complex array
       for(int i=0;i<N;i++){
