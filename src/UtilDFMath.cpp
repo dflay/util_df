@@ -3,6 +3,40 @@
 namespace util_df{
    namespace Math{
       //______________________________________________________________________________
+      double SimpsonIntegral(double (*f)(const double),
+	    double A,double B,double epsilon,int Depth){
+	 // Adaptive Simpson's Rule
+	 double C   = (A + B)/2.0;
+	 double H   = B - A;
+	 double fa  = (*f)(A);
+	 double fb  = (*f)(B);
+	 double fc  = (*f)(C);
+	 double S   = (H/6.0)*(fa + 4.0*fc + fb);
+	 double ans = AdaptiveSimpsonAux(f,A,B,epsilon,S,fa,fb,fc,Depth);
+	 return ans;
+      }
+      //______________________________________________________________________________
+      double AdaptiveSimpsonAux(double (*f)(const double),
+	    double A,double B,double epsilon,
+	    double S,double fa,double fb,double fc,int bottom){
+	 // Recursive auxiliary function for AdaptiveSimpson() function
+	 double C      = (A + B)/2.0;
+	 double H      = B - A;
+	 double D      = (A + C)/2.0;
+	 double E      = (C + B)/2.0;
+	 double fd     = (*f)(D);
+	 double fe     = (*f)(E);
+	 double Sleft  = (H/12.0)*(fa + 4.0*fd + fc);
+	 double Sright = (H/12.0)*(fc + 4.0*fe + fb);
+	 double S2     = Sleft + Sright;
+	 if( (bottom <= 0) || (fabs(S2 - S) <= 15.0*epsilon) ){
+	    return S2 + (S2 - S)/15;
+	 }
+	 double arg = AdaptiveSimpsonAux(f,A,C,epsilon/2.0,Sleft, fa,fc,fd,bottom-1) +
+	    AdaptiveSimpsonAux(f,C,B,epsilon/2.0,Sright,fc,fb,fe,bottom-1);
+	 return arg;
+      }
+      //______________________________________________________________________________
       int LeastSquaresFitting(std::vector<double> x,std::vector<double> y,double &intercept,double &slope,double &r){
 	 // we do this just in case we need to loop over N < x.size() 
 

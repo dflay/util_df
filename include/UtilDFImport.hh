@@ -51,7 +51,7 @@ namespace util_df{
 	    T *arr = new T[size];
 	    memcpy(arr,(T *)memblock,size);
 
-            int NBYTES=0;
+	    int NBYTES=0;
 	    if( std::is_integral<T>::value ){
 	       // type is integer or boolean 
 	       NBYTES = 2;
@@ -71,121 +71,121 @@ namespace util_df{
       // generalized csv input 
       //______________________________________________________________________________
       template <typename T>
-	 int ImportData1(std::string inpath,std::string delim,std::vector<T> &x){
-	    // simple function to import a 1D vector
-	    // file format doesn't necessarily matter, but let's do this for consistency  
-	    if( delim.compare("csv")!=0 && delim.compare("tsv")!=0 ) {
-	       std::cout << "[util_df::Import::ImportData1]: Invalid file type " << delim << std::endl;
-	       return 1;
-	    }
-	    // open the file and read in data 
-	    T ix;
-	    std::ifstream infile;
-	    infile.open(inpath.c_str());
-	    if( infile.fail() ){
-	       std::cout << "[util_df::Import::ImportData1]: Cannot open the file: " << inpath << std::endl;
-	       return 1;
-	    }else{
-	       while( !infile.eof() ){
-		  infile >> ix;
-		  x.push_back(ix);
-	       }
-	       infile.close();
-	       x.pop_back();
-	    }
-	    return 0;
-	 }
+         int ImportData1(std::string inpath,std::string delim,std::vector<T> &x){
+            // simple function to import a 1D vector
+            // file format doesn't necessarily matter, but let's do this for consistency  
+            if( delim.compare("csv")!=0 && delim.compare("tsv")!=0 ) {
+               std::cout << "[util_df::Import::ImportData1]: Invalid file type " << delim << std::endl;
+               return 1;
+            }
+            // open the file and read in data 
+            T ix;
+            std::ifstream infile;
+            infile.open(inpath.c_str());
+            if( infile.fail() ){
+               std::cout << "[util_df::Import::ImportData1]: Cannot open the file: " << inpath << std::endl;
+               return 1;
+            }else{
+               while( !infile.eof() ){
+        	  infile >> ix;
+        	  x.push_back(ix);
+               }
+               infile.close();
+               x.pop_back();
+            }
+            return 0;
+         }
       //______________________________________________________________________________
       template <typename T1,typename T2>
-	 int ImportData2(std::string inpath,std::string delim,std::vector<T1> &x1,std::vector<T2> &x2){
-	    // check file type 
-	    int isCSV=0;
-	    if( delim.compare("csv")==0 ) isCSV = 1;
+         int ImportData2(std::string inpath,std::string delim,std::vector<T1> &x1,std::vector<T2> &x2){
+            // check file type 
+            int isCSV=0;
+            if( delim.compare("csv")==0 ) isCSV = 1;
 
-	    if( delim.compare("csv")!=0 && delim.compare("tsv")!=0 ) {
-	       std::cout << "[util_df::Import::ImportData2]: Invalid file type " << delim << std::endl;
-	       return 1;
-	    }
-	    // open file and read in data 
-	    int rc=0;
-	    std::string sx1,sx2;
-	    T1 ix1;
-	    T2 ix2;
-	    std::ifstream infile;
-	    infile.open(inpath.c_str());
-	    if( infile.fail() ){
-	       std::cout << "[util_df::Import::ImportData2]: Cannot open the file: " << inpath << std::endl;
-	       return 1;
-	    }else{
-	       while( !infile.eof() ){
-		  if(isCSV){
-		     std::getline(infile,sx1,',');
-		     std::getline(infile,sx2);
-		     rc = Algorithm::Convert<T1>(sx1,ix1);
-		     rc = Algorithm::Convert<T2>(sx2,ix2);
-		     // FIXME: how to handle strings??
-		     x1.push_back(ix1);
-		     x2.push_back(ix2);
-		  }else{
-		     infile >> ix1 >> ix2;
-		     x1.push_back(ix1);
-		     x2.push_back(ix2);
-		  }
-	       }
-	       infile.close();
-	       x1.pop_back();
-	       x2.pop_back();
-	    }
-	    return rc;
-	 }
+            if( delim.compare("csv")!=0 && delim.compare("tsv")!=0 ) {
+               std::cout << "[util_df::Import::ImportData2]: Invalid file type " << delim << std::endl;
+               return 1;
+            }
+            // open file and read in data 
+            int rc=0;
+            std::string sx1,sx2;
+            T1 ix1;
+            T2 ix2;
+            std::ifstream infile;
+            infile.open(inpath.c_str());
+            if( infile.fail() ){
+               std::cout << "[util_df::Import::ImportData2]: Cannot open the file: " << inpath << std::endl;
+               return 1;
+            }else{
+               while( !infile.eof() ){
+        	  if(isCSV){
+        	     std::getline(infile,sx1,',');
+        	     std::getline(infile,sx2);
+        	     rc = Algorithm::Convert<T1>(sx1,ix1);
+        	     rc = Algorithm::Convert<T2>(sx2,ix2);
+        	     // FIXME: how to handle strings??
+        	     x1.push_back(ix1);
+        	     x2.push_back(ix2);
+        	  }else{
+        	     infile >> ix1 >> ix2;
+        	     x1.push_back(ix1);
+        	     x2.push_back(ix2);
+        	  }
+               }
+               infile.close();
+               x1.pop_back();
+               x2.pop_back();
+            }
+            return rc;
+         }
       //______________________________________________________________________________                          
       template <typename T1,typename T2,typename T3>
-	int ImportData3(std::string inpath,std::string delim,std::vector<T1> &x1,std::vector<T2> &x2, std::vector<T3> &x3){
-	// check file type                                                                                      
-	int isCSV=0;
-	if( delim.compare("csv")==0 ) isCSV = 1;
+        int ImportData3(std::string inpath,std::string delim,std::vector<T1> &x1,std::vector<T2> &x2, std::vector<T3> &x3){
+        // check file type                                                                                      
+        int isCSV=0;
+        if( delim.compare("csv")==0 ) isCSV = 1;
 
-	if( delim.compare("csv")!=0 && delim.compare("tsv")!=0 ) {
-	  std::cout << "[util_df::Import::ImportData3]: Invalid file type " << delim << std::endl;
-	  return 1;
-	}
-	// open file and read in data                                                                           
-	int rc=0;
-	std::string sx1,sx2,sx3;
-	T1 ix1;
-	T2 ix2;
-	T3 ix3;
-	std::ifstream infile;
-	infile.open(inpath.c_str());
-	if( infile.fail() ){
-	  std::cout << "[util_df::Import::ImportData3]: Cannot open the file: " << inpath << std::endl;
-	  return 1;
-	}else{
-	  while( !infile.eof() ){
-	    if(isCSV){
-	      std::getline(infile,sx1,',');
-	      std::getline(infile,sx2,',');
-	      std::getline(infile,sx3);
-	      rc = Algorithm::Convert<T1>(sx1,ix1);
-	      rc = Algorithm::Convert<T2>(sx2,ix2);
-	      rc = Algorithm::Convert<T3>(sx3,ix3);
-	      // FIXME: how to handle strings??                                                              
-	      x1.push_back(ix1);
-	      x2.push_back(ix2);
-	      x3.push_back(ix3);
-	    }else{
-	      infile >> ix1 >> ix2 >> ix3;
-	      x1.push_back(ix1);
-	      x2.push_back(ix2);
-	      x3.push_back(ix3);
-	    }
-	  }
-	  infile.close();
-	  x1.pop_back();
-	  x2.pop_back();
-	  x3.pop_back();
-	}
-	return rc;
+        if( delim.compare("csv")!=0 && delim.compare("tsv")!=0 ) {
+          std::cout << "[util_df::Import::ImportData3]: Invalid file type " << delim << std::endl;
+          return 1;
+        }
+        // open file and read in data                                                                           
+        int rc=0;
+        std::string sx1,sx2,sx3;
+        T1 ix1;
+        T2 ix2;
+        T3 ix3;
+        std::ifstream infile;
+        infile.open(inpath.c_str());
+        if( infile.fail() ){
+          std::cout << "[util_df::Import::ImportData3]: Cannot open the file: " << inpath << std::endl;
+          return 1;
+        }else{
+          while( !infile.eof() ){
+            if(isCSV){
+              std::getline(infile,sx1,',');
+              std::getline(infile,sx2,',');
+              std::getline(infile,sx3);
+              rc = Algorithm::Convert<T1>(sx1,ix1);
+              rc = Algorithm::Convert<T2>(sx2,ix2);
+              rc = Algorithm::Convert<T3>(sx3,ix3);
+              // FIXME: how to handle strings??                                                              
+              x1.push_back(ix1);
+              x2.push_back(ix2);
+              x3.push_back(ix3);
+            }else{
+              infile >> ix1 >> ix2 >> ix3;
+              x1.push_back(ix1);
+              x2.push_back(ix2);
+              x3.push_back(ix3);
+            }
+          }
+          infile.close();
+          x1.pop_back();
+          x2.pop_back();
+          x3.pop_back();
+        }
+        return rc;
       }
       //______________________________________________________________________________
       template <typename T>

@@ -207,6 +207,9 @@ namespace util_df{
       double LinearInterpolation(double x,double x0,double y0,double x1,double y1);
       double AllanVariance(std::vector<double> data, const int M);
       double AllanDeviation(std::vector<double> data, const int M);
+      double SimpsonIntegral(double (*f)(const double),double A,double B,double epsilon=1E-6,int Depth=10); 
+      double AdaptiveSimpsonAux(double (*f)(const double),double A,double B,double epsilon,
+            double S,double fa,double fb,double fc,int bottom); 
    } // ::math
 } // ::util_df 
 
