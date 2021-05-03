@@ -1,6 +1,17 @@
 #include "UtilDFFunc.hh"
 //______________________________________________________________________________
 namespace util_df {
+   //______________________________________________________________________________
+   bool IsInCharString(const char *str1,const char *search){
+      // find phrase in a string  
+      for(int i=0;i<strlen(str1);i++){
+	 if(strncmp (&str1[i], search, strlen(search)) == 0){
+	    return true;
+	 }
+      }
+      return false;
+   }
+   //______________________________________________________________________________
    int SplitString_whiteSpace(const std::string myStr,std::vector<std::string> &out){
       std::istringstream buffer(myStr);
       std::copy(std::istream_iterator<std::string>(buffer), 

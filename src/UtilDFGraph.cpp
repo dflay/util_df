@@ -46,6 +46,29 @@ namespace util_df{
 	 return g;
       }
       //______________________________________________________________________________
+      TGraphAsymmErrors *GetBand(std::vector<double> x,std::vector<double> min,std::vector<double> max,int color){
+	 // creates a band spanning the range between min and max
+         // plotting notes:
+         // - use the option e3
+         // - draw separate from TMultiGraph 
+         // - use SetFillColor to define color of the band    
+           
+	 std::vector<double> y,eyh,eyl,exh,exl;
+	 double arg=0;
+	 const int N = x.size();
+	 for(int i=0;i<N;i++){
+	    arg = 0.5*(max[i]-min[i]);
+	    y.push_back(arg);
+	    eyl.push_back(y[i]-min[i]);
+	    eyh.push_back(y[i]+min[i]);
+	 }
+
+	 TGraphAsymmErrors *g = util_df::Graph::GetTGraphAsymmErrors(x,y,eyl,eyh);
+	 g->SetFillStyle(3002);
+	 g->SetFillColor(color);
+	 return g;
+      }
+      //______________________________________________________________________________
       TGraph *GetTGraph(CSVManager *data,std::string xAxis,std::string yAxis){
 	 std::vector<double> x,y;
 	 data->GetColumn_byName<double>(xAxis,x); 

@@ -19,6 +19,7 @@
 namespace util_df{
    std::string GetStringTimeStampFromUTC(unsigned long unix_time); 
    unsigned long int GetUTCTimeStampFromString(std::string timeStamp,bool isDST=false);
+   bool IsInCharString(const char *str1,const char *search); 
    int MakeDirectory(const char *path); 
    int SplitString(const char delim,const std::string myStr,std::vector<std::string> &out);
    int SplitString_whiteSpace(const std::string myStr,std::vector<std::string> &out); 

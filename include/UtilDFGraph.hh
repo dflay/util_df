@@ -42,6 +42,7 @@ namespace util_df {
       TGraphErrors *GetTGraphErrors(std::vector<double> x,std::vector<double> ex,std::vector<double> y,std::vector<double> ey);
       TGraphAsymmErrors *GetTGraphAsymmErrors(std::vector<double> x,std::vector<double> y,std::vector<double> eyh);
       TGraphAsymmErrors *GetTGraphAsymmErrors(std::vector<double> x,std::vector<double> y,std::vector<double> eyl,std::vector<double> eyh);
+      TGraphAsymmErrors *GetBand(std::vector<double> x,std::vector<double> min,std::vector<double> max,int color=kBlue);
 
       TGraph *GetTGraph(CSVManager *data,std::string xAxis,std::string yAxis); 
       TGraph *GetTGraphErrors(CSVManager *data,std::string xAxis,std::string yAxis,std::string yAxisErr);
