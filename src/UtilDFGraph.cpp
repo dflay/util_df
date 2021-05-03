@@ -46,7 +46,7 @@ namespace util_df{
 	 return g;
       }
       //______________________________________________________________________________
-      TGraphAsymmErrors *GetBand(std::vector<double> x,std::vector<double> min,std::vector<double> max,int color){
+      TGraphAsymmErrors *GetBand(std::vector<double> x,std::vector<double> min,std::vector<double> max,int color,int style,double alpha){
 	 // creates a band spanning the range between min and max
          // plotting notes:
          // - use the option e3
@@ -64,8 +64,8 @@ namespace util_df{
 	 }
 
 	 TGraphAsymmErrors *g = util_df::Graph::GetTGraphAsymmErrors(x,y,eyl,eyh);
-	 g->SetFillStyle(3002);
-	 g->SetFillColor(color);
+	 g->SetFillStyle(style);
+	 g->SetFillColorAlpha(color,alpha); // alpha = opacity 
 	 return g;
       }
       //______________________________________________________________________________
