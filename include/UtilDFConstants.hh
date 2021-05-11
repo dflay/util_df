@@ -40,6 +40,11 @@ namespace util_df {
       static const double proton_mass   = 0.9383;      // GeV 
       static const double pion_mass     = 0.140;       // GeV
 
+      static const double mu_0          = 1.2566371e-06; // 4pi*1E-7
+
+      static const double Gauss         = 1E-4;         // 1 Gauss    = 1E-4 Tesla 
+      static const double Oerstead      = 79.577471546; // 1 Oerstead = 79.6 A/m  
+
    } //::constants 
 
 } //::util_df

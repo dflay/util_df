@@ -90,14 +90,14 @@ namespace util_df {
       double GetBremss_Loss_Exact_rndm(const double E,const double bt){
 	 // Exact form for Bremsstrahlung energy loss
          // - input: E = incident particle energy; bt = b*t, b = kinematic constant, t = material thickness (#X0) 
-         // - output: energy loss in units equivalent to E's units   
+         // - output: energy loss dE in units equivalent to E units   
 	 // Description 
          // - uses the accept/reject method to sample the real distribution 
 	 // - exact function:      f(x) = (bt/E)*(1 + 0.5772*bt)*x^{bt-1}*(1 - x + (3/4)*x*x), x = (Delta E)/E 
 	 // - test function:       g(x) = bt*x^{bt-1}                                                                 
 	 // - comparison function: h(x) = f(x)/g(x)
-	 // - maximum of h:        c    = (1/E)*(1 + 0.5772*bt)*(7/4); factor of 7/4 arises from looking at h(x) for x = 1 
-	 // - MC function:         H(x) = h(x)/c = 1 - x + (3/4)*x*x 
+	 // - maximum of h:        c    = (1/E)*(1 + 0.5772*bt)*(7/4); factor of 7/4 arises from looking at h(x=1) 
+	 // - MC function:         H(x) = h(x)/c = (4/7)*(1 - x + (3/4)*x*x)  
 	 // For more details, see functions (below):
 	 // - bremss_getRndmNumG, bremss_getH 
 	 // - Approximate time accumulated due to do-while loop: ~1.751E-04 sec
@@ -110,7 +110,7 @@ namespace util_df {
 	 }while(U>H);
 
 	 // we found the random variable X, distributed according to the exact function 
-	 // on 0 < X < 1.  Now, since it's equal to (Delta E)/E, we multiply by the 
+	 // on 0 < X < 1.  Now, since X = (Delta E)/E, we multiply by the 
 	 // energy E
 	 double result = E*X;
 	 return result;
@@ -125,10 +125,14 @@ namespace util_df {
       }
       //___________________________________________________________________________________
       double bremss_getH(const double x){
-	 // ratio of exact function to test function, scaled by the maximum value 
+	 // h(x) = ratio of exact function f(x) to test function g(x), 
+         // scaled by the maximum value of h(x) = h_max 
+         // 0 <= x <= 1 
+         // H(x) = h(x)/h_max
+         // h(x) = f(x)/g(x)   
          // maximum occurs for x = 1 => factor of 4/7 shows up here 
-	 double h = (1. - x + (3./4.)*x*x)*(4./7.);
-	 // double h = (1. - x + (3./4.)*x*x);
+         double sf = 4./7.; 
+	 double h = sf*(1. - x + (3./4.)*x*x);
 	 return h;
       }
       //___________________________________________________________________________________

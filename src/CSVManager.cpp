@@ -269,6 +269,7 @@ namespace util_df {
 	    for(int j=1;j<NCOL;j++) sprintf(line,"%s,%s",line,fData[i][j].c_str() );
 	    outfile << line << std::endl;
 	 }
+	 std::cout << "[CSVManager::WriteFile]: Data written to the file: " << outpath << std::endl;
       }
       return 0;
    }
