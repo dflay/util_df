@@ -125,15 +125,15 @@ namespace util_df {
       }
       //___________________________________________________________________________________
       double bremss_getH(const double x){
-	 // h(x) = ratio of exact function f(x) to test function g(x), 
-         // scaled by the maximum value of h(x) = h_max 
+	 // H(x) = ratio of exact function f(x) to test function g(x), 
+         // scaled by the maximum value of h(x), which is for h(x=1) = h_max 
          // 0 <= x <= 1 
-         // H(x) = h(x)/h_max
          // h(x) = f(x)/g(x)   
+         // H(x) = h(x)/h_max
          // maximum occurs for x = 1 => factor of 4/7 shows up here 
          double sf = 4./7.; 
-	 double h = sf*(1. - x + (3./4.)*x*x);
-	 return h;
+	 double H = sf*(1. - x + (3./4.)*x*x);
+	 return H;
       }
       //___________________________________________________________________________________
       double bremss_geth(const double x,const double E,const double bt){
