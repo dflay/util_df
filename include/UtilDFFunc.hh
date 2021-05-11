@@ -10,8 +10,8 @@
 #include <string> 
 #include <sstream>
 #include <iterator> 
-#include <sys/stat.h> 
-#include <dirent.h>
+#include <sys/stat.h>
+#include <sys/dirent.h>
 
 #include "TTree.h"
 #include "TFile.h"
