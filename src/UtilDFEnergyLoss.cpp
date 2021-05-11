@@ -131,7 +131,8 @@ namespace util_df {
          // h(x) = f(x)/g(x)   
          // H(x) = h(x)/h_max
          // maximum occurs for x = 1 => factor of 4/7 shows up here 
-         double sf = 4./7.; 
+         // double sf = 4./7.; // perhaps irrelevant? Makes the generator inefficient?
+         double sf = 1.;  
 	 double H = sf*(1. - x + (3./4.)*x*x);
 	 return H;
       }
