@@ -29,6 +29,11 @@ namespace util_df {
 	 kGlass
       }; 
 
+      enum unitClass{
+	 kCGS,
+	 kMKS
+      };
+
       static const int FTSIZE           = 1E+7; 
 
       static const double alpha         = 1.0/137.0359895;

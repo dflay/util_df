@@ -249,7 +249,9 @@ namespace util_df {
       // write the data to a file
       int NROW = fData.size(); 
       int NCOL = fData[0].size();
-      char line[2048]; 
+      char line[2048];
+      char delim = ','; 
+      if(fDelimiter.compare("tsv")==0) delim = ' '; 
       std::ofstream outfile;
       outfile.open(outpath); 
       if( outfile.fail() ){
@@ -259,14 +261,14 @@ namespace util_df {
 	 if(fHeaderExists){ 
 	    // print header if necessary  
 	    sprintf(line,"%s",fHeader[0].c_str() );
-	    for(int i=1;i<NCOL;i++) sprintf(line,"%s,%s",line,fHeader[i].c_str() );
+	    for(int i=1;i<NCOL;i++) sprintf(line,"%s%c%s",line,delim,fHeader[i].c_str() );
 	    outfile << line << std::endl;
 	 }
 	 // print data
 	 for(int i=0;i<NROW;i++){
 	    sprintf(line,"%s",fData[i][0].c_str()); 
 	    NCOL = fData[i].size();
-	    for(int j=1;j<NCOL;j++) sprintf(line,"%s,%s",line,fData[i][j].c_str() );
+	    for(int j=1;j<NCOL;j++) sprintf(line,"%s%c%s",line,delim,fData[i][j].c_str() );
 	    outfile << line << std::endl;
 	 }
 	 std::cout << "[CSVManager::WriteFile]: Data written to the file: " << outpath << std::endl;
