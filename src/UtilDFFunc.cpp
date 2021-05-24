@@ -2,6 +2,11 @@
 //______________________________________________________________________________
 namespace util_df {
    //______________________________________________________________________________
+   int RemoveWhiteSpace(std::string &str){
+      str.erase(remove(str.begin(),str.end(),' '),str.end());
+      return 0;
+   }
+   //______________________________________________________________________________
    bool IsInCharString(const char *str1,const char *search){
       // find phrase in a string  
       for(int i=0;i<strlen(str1);i++){
