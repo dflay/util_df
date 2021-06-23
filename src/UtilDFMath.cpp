@@ -116,6 +116,78 @@ namespace util_df{
 	 return y;
       }
       //______________________________________________________________________________
+      double BilinearInterpolation(double x0,double y0,
+	    std::vector<double> x,std::vector<double> y,std::vector<double> F,
+	    bool isDebug,double thr){
+	 // bilinear interpolation to estimate F(x0,y0)  
+	 // input 
+	 // - desired coordinate x0, y0 
+	 // - vectors x, y, F representing the grid F(x,y)  
+	 // optional input
+	 // - isDebug: print debug info (default = false)  
+	 // - thr: threshold for determining corners of F(x',y') given input x',y' (default = 1E-3) 
+	 // output 
+	 // - the value F(x0,y0)  
+
+	 // make copies of x and y vectors to find bounds
+	 // passing vector as argument to constructor => deep copy
+	 std::vector<double> xx(x),yy(y);
+
+	 // sort and strip out repeats
+	 Algorithm::SortedRemoveDuplicates<double>(xx);
+	 Algorithm::SortedRemoveDuplicates<double>(yy);
+
+	 // find bounding values for x0 and y0  
+	 int ixlo=0,ixhi=0,iylo=0,iyhi=0;
+	 Algorithm::BinarySearch<double>(xx,x0,ixlo,ixhi);
+	 Algorithm::BinarySearch<double>(yy,y0,iylo,iyhi);
+
+	 // get bounding (x,y) values
+	 double xl   = xx[ixlo];
+	 double xh   = xx[ixhi];
+	 double yl   = yy[iylo];
+	 double yh   = yy[iyhi];
+
+	 // weight factors for interpolation 
+	 double xwl  = (x0-xl)/(xh-xl);
+	 double xwh  = (xh-x0)/(xh-xl);
+	 double ywl  = (y0-yl)/(yh-yl);
+	 double ywh  = (yh-y0)/(yh-yl);
+
+	 // construct F(xlo,ylo), F(xlo,yhi), F(xhi,ylo), F(xhi,yhi)
+	 double fll=0,flh=0,fhl=0,fhh=0;
+	 const int NP = F.size();
+	 for(int i=0;i<NP;i++){
+	    if( abs(x[i]-xl)<thr && abs(y[i]-yl)<thr ) fll = F[i];
+	    if( abs(x[i]-xl)<thr && abs(y[i]-yh)<thr ) flh = F[i];
+	    if( abs(x[i]-xh)<thr && abs(y[i]-yl)<thr ) fhl = F[i];
+	    if( abs(x[i]-xh)<thr && abs(y[i]-yh)<thr ) fhh = F[i];
+	 }
+
+         char msg[200]; 
+
+	 if(isDebug){
+	    std::cout << "---------------- BilinearInterpolation ----------------" << std::endl;
+	    sprintf(msg,"xl = %.3lf < x0 = %.3lf < xh = %.3lf",xl,x0,xh);
+	    std::cout << msg << std::endl;
+	    sprintf(msg,"yl = %.3lf < y0 = %.3lf < yh = %.3lf",yl,y0,yh);
+	    std::cout << msg << std::endl;
+	    sprintf(msg,"F(%.3lf,%.3lf) = %.3lf",xl,yl,fll);
+	    std::cout << msg << std::endl;
+	    sprintf(msg,"F(%.3lf,%.3lf) = %.3lf",xl,yh,flh);
+	    std::cout << msg << std::endl;
+	    sprintf(msg,"F(%.3lf,%.3lf) = %.3lf",xh,yl,fhl);
+	    std::cout << msg << std::endl;
+	    sprintf(msg,"F(%.3lf,%.3lf) = %.3lf",xh,yh,fhh);
+	    std::cout << msg << std::endl;
+	    std::cout << "-------------------------------------------------------" << std::endl;
+	 }
+
+	 // put everything together 
+	 double f00 = ywh*(xwh*fll + xwl*fhl) + ywl*(xwh*flh + xwl*fhh);
+	 return f00;
+      }
+      //______________________________________________________________________________
       double AllanVariance(std::vector<double> x, const int M){
          // compute the allan variance for M points per group 
          // in the data vector x of size N points.

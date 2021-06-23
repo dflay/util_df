@@ -11,6 +11,7 @@
 #include <algorithm> 
 
 #include "UtilDFConstants.hh"
+#include "UtilDFAlgorithm.hh"
 
 namespace util_df{
    namespace Math{
@@ -205,6 +206,9 @@ namespace util_df{
       int LeastSquaresFitting(std::vector<double> x,std::vector<double> y,double &intercept,double &slope,double &r);
       int LeastSquaresFitting(int N,double *x,double *y,double &intercept,double &slope,double &r);
       double LinearInterpolation(double x,double x0,double y0,double x1,double y1);
+      double BilinearInterpolation(double x0,double y0,
+            std::vector<double> x,std::vector<double> y,std::vector<double> F,
+	    bool isDebug=false,double thr=1E-3);
       double AllanVariance(std::vector<double> data, const int M);
       double AllanDeviation(std::vector<double> data, const int M);
       double SimpsonIntegral(double (*f)(const double),double A,double B,double epsilon=1E-6,int Depth=10); 
