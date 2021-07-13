@@ -1,85 +1,83 @@
 #----------------------------------------------------------------------------
 # Setup the project
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
-project(util_df)
-set (LIB_NAME "util_df") 
+project(utildf LANGUAGES CXX)
 
 #----------------------------------------------------------------------------
-# Setup GNUInstallDirs for installation
-include(GNUInstallDirs)
+# Implement user-defined items here
+# The generated shared library will be named lib$(PACKAGE).so/dylib 
+set(PACKAGE UtilDF)
+
+# sources 
+set(src 
+  ABA.cpp
+  Blinder.cpp
+  CSVManager.cpp
+  FourierTransform.cpp
+  MovingAverage.cpp
+  TemperatureSensor.cpp
+  UtilDFCrossSection.cpp
+  UtilDFEnergyLoss.cpp
+  UtilDFFunc.cpp
+  UtilDFGraph.cpp
+  UtilDFHistogram.cpp
+  UtilDFImport.cpp
+  UtilDFMath.cpp
+  )
+
+# headers
+string(REPLACE .cpp .hh headers "${src}")
+
+# additional headers
+set(allheaders ${headers} UtilDFConstants.hh UtilDFUnits.hh Material.hh rootData.hh json.hh)
+
+# Sources live in dedicated src directory
+list(TRANSFORM src PREPEND "${CMAKE_CURRENT_LIST_DIR}/src/")
+
+# Headers live in dedicated include directory
+list(TRANSFORM allheaders PREPEND "${CMAKE_CURRENT_LIST_DIR}/include/")
+
+# # checks 
+# MESSAGE(${src})
+# MESSAGE(${allheaders}) 
 
 #----------------------------------------------------------------------------
-# The following lines are required so that the executable can dynamically locate 
-# the library dependencies independent of use, i.e. don't skip the full RPATH for the build tree
-SET(CMAKE_SKIP_BUILD_RPATH  FALSE)
-
-# when building, don't use the install RPATH already
-# (but later on when installing)
-SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-
-SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}")
-
-# add the automatically determined parts of the RPATH
-# which point to directories outside the build tree to the install RPATH
-SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
-# the RPATH to be used when installing, but only if it's not a system directory
-LIST(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_FULL_LIBDIR}" isSystemDir)
-IF("${isSystemDir}" STREQUAL "-1")
-   SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}")
-ENDIF("${isSystemDir}" STREQUAL "-1")
-
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-
-#----------------------------------------------------------------------------
-# Force use of c++11 standard
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-#----------------------------------------------------------------------------
-# ROOT path
-# commented out the following line so that this procedure will evolve with ROOT:
-# set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
-# You need to tell CMake where to find the ROOT installation. This can be done in a number of ways:
-# - ROOT built with classic configure/make use the provided $ROOTSYS/etc/cmake/FindROOT.cmake
-# - ROOT built with CMake. Add in CMAKE_PREFIX_PATH the installation prefix for ROOT
+# Find ROOT 
+set(ROOT_VER 6.22) 
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
-find_package(ROOT REQUIRED)
-
+find_package(ROOT ${ROOT_VER} REQUIRED)
 # Define useful ROOT functions and macros (e.g. ROOT_GENERATE_DICTIONARY)
 include(${ROOT_USE_FILE})
 
 #----------------------------------------------------------------------------
-# Directories relevant for this project 
-include_directories(
-${PROJECT_SOURCE_DIR}/include
-${ROOT_INCLUDE_DIR}
-${PROJECT_SOURCE_DIR}/src 
-${CMAKE_CURRENT_BINARY_DIR}/include
-)
+# Library
+# add_library(${PACKAGE} SHARED ${src} ${allheaders} ${PACKAGE}Dict.cxx)
+add_library(${PACKAGE} SHARED ${src} ${allheaders})
+
+target_compile_options(${PACKAGE} PRIVATE ${${PROJECT_NAME_UC}_DIAG_FLAGS_LIST})
+
+target_include_directories(${PACKAGE}
+  PUBLIC
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+  )
+target_link_libraries(${PACKAGE} PUBLIC ${ROOT_LIBRARIES})
+
+include(GNUInstallDirs)
+
+install(TARGETS ${PACKAGE}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  )
+install(FILES ${allheaders} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 #----------------------------------------------------------------------------
-# sources and headers for the project 
-file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp) 
-file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/include/*.hh) 
-
-#----------------------------------------------------------------------------
-# # generate ROOT dictionary (for items that derive from TObject)  
-# ROOT_GENERATE_DICTIONARY(
-# G__UtilDF
-# UtilDFGraph.hh
-# UtilDFImport.hh 
-# OPTIONS -I${PROJECT_SOURCE_DIR}/include 
-# MODULE UtilDF
-# LINKDEF UtilDF_LinkDef.hh
-# )
-# generate the shared library from sources 
-add_library (${LIB_NAME} SHARED ${SOURCES})
-target_link_libraries (${LIB_NAME} ${ROOT_LIBRARIES})
-
-#----------------------------------------------------------------------------
-# Install items 
-install (TARGETS ${LIB_NAME} DESTINATION ${INSTALL_DIR})
-install (FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-# install(DIRECTORY ${PROJECT_SOURCE_DIR}/examples DESTINATION ${CMAKE_INSTALL_PREFIX})
-
+# ROOT dictionary
+root_generate_dictionary(
+ ${PACKAGE}Dict
+ ${allheaders} 
+ LINKDEF ${CMAKE_CURRENT_LIST_DIR}/include/${PACKAGE}_LinkDef.hh  
+ MODULE UtilDF
+ )

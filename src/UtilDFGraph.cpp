@@ -86,6 +86,23 @@ namespace util_df{
 	 return g;
       }
       //______________________________________________________________________________
+      TGraph *GetTGraph(CSVManager *data,int xIndex,int yIndex){
+	 std::vector<double> x,y;
+	 data->GetColumn_byIndex<double>(xIndex,x); 
+	 data->GetColumn_byIndex<double>(yIndex,y); 
+	 TGraph *g = GetTGraph(x,y);
+	 return g;
+      }
+      //______________________________________________________________________________
+      TGraph *GetTGraphErrors(CSVManager *data,int xIndex,int yIndex,int eyIndex){
+	 std::vector<double> x,y,ey;
+	 data->GetColumn_byIndex<double>(xIndex,x); 
+	 data->GetColumn_byIndex<double>(yIndex,y); 
+	 data->GetColumn_byIndex<double>(eyIndex,ey); 
+	 TGraphErrors *g = GetTGraphErrors(x,y,ey);
+	 return g;
+      }
+      //______________________________________________________________________________
       TGraph *GetTGraphDifference(const int NPTS,TGraph *g1,TGraph *g2){
 	 // compute difference of two TGraphs  
          // find the min and max values 
