@@ -1,5 +1,5 @@
 #! /bin/bash  
-# a simple script to build util_df
+# a simple script to build UtilDF
 #_______________________________________________________________________________
 function cleanup { 
    echo "Cleaning up previous build..."
