@@ -46,13 +46,13 @@ list(TRANSFORM allheaders PREPEND "${CMAKE_CURRENT_LIST_DIR}/include/")
 set(ROOT_VER 6.22) 
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
 find_package(ROOT ${ROOT_VER} REQUIRED)
-
 # Define useful ROOT functions and macros (e.g. ROOT_GENERATE_DICTIONARY)
 include(${ROOT_USE_FILE})
 
 #----------------------------------------------------------------------------
 # Library
-add_library(${PACKAGE} SHARED ${src} ${allheaders} ${PACKAGE}Dict.cxx)
+# add_library(${PACKAGE} SHARED ${src} ${allheaders} ${PACKAGE}Dict.cxx)
+add_library(${PACKAGE} SHARED ${src} ${allheaders})
 
 target_compile_options(${PACKAGE} PRIVATE ${${PROJECT_NAME_UC}_DIAG_FLAGS_LIST})
 

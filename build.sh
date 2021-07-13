@@ -17,9 +17,9 @@ function configure {
 function build_lib { 
    echo "Building..."
    make && make install
+   cp *.pcm *.rootmap ../install/lib
    # for macOS
-   cd ../install/lib && rm *.so && ln -s libutil_df.dylib libutil_df.so
-   # cp *.pcm *.rootmap ../lib
+   cd ../install/lib && rm *.so && ln -s libUtilDF.dylib libUtilDF.so
    echo "--> Done!"
 }
 #_______________________________________________________________________________
