@@ -16,27 +16,27 @@
 #include "UtilDFImport.hh"
 
 namespace util_df{
-      //______________________________________________________________________________
-      class TemperatureSensor{
-	 private:
-	    bool fDataLoaded;
-	    std::string fName,fPrefix;
-	    std::vector<double> fT,fR;
-	    int LoadData();
+   //______________________________________________________________________________
+   class TemperatureSensor{
+      private:
+	 bool fDataLoaded;
+	 std::string fName,fPrefix;
+	 std::vector<double> fT,fR;
+	 int LoadData();
 
-	 public:
-	    TemperatureSensor(std::string sensorName="UNKNOWN");
-	    ~TemperatureSensor();
+      public:
+	 TemperatureSensor(std::string sensorName="UNKNOWN");
+	 ~TemperatureSensor();
 
-	    void ClearData();
-	    void SetName(std::string name)     { fName   = name; }
-	    void SetDataPath(std::string path) { fPrefix = path; }
+	 void ClearData();
+	 void SetName(std::string name)     { fName   = name; }
+	 void SetDataPath(std::string path) { fPrefix = path; }
 
-	    std::string GetName()        const { return fName;   }
-	    double GetTemperature(double r);
-	    double GetTemperature_splineFit(double r);
+	 std::string GetName()        const { return fName;   }
+	 double GetTemperature(double r);
+	 double GetTemperature_splineFit(double r);
 
-      };
+   };
 } //::util_df
 
 #endif  

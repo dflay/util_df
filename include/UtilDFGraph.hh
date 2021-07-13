@@ -48,6 +48,9 @@ namespace util_df {
       TGraph *GetTGraph(CSVManager *data,std::string xAxis,std::string yAxis); 
       TGraph *GetTGraphErrors(CSVManager *data,std::string xAxis,std::string yAxis,std::string yAxisErr);
 
+      TGraph *GetTGraph(CSVManager *data,int xIndex,int yIndex); 
+      TGraph *GetTGraphErrors(CSVManager *data,int xIndex,int yIndex,int eyIndex);
+
       TGraph *GetTGraphDifference(const int NPTS,TGraph *g1,TGraph *g2); 
 
       void SetParameters(TGraph *g,int marker,int color,double mSize=1.0,int width=1);

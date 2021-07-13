@@ -3,7 +3,7 @@
 #_______________________________________________________________________________
 function cleanup { 
    echo "Cleaning up previous build..."
-   rm -r CMakeFiles *.cmake *.txt *.cxx *.pcm *.rootmap Makefile *.so 
+   rm -r CMakeFiles *.cmake *.txt *.cxx *.pcm *.rootmap Makefile *.so *.dylib
    echo "--> Done!"
 }
 #_______________________________________________________________________________
