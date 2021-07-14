@@ -51,20 +51,20 @@
 #pragma link C++ function util_df::Algorithm::BinarySearch<signed int>+;
 #pragma link C++ function util_df::Algorithm::BinarySearch<signed long>+;
 #pragma link C++ function util_df::Algorithm::BinarySearch<signed long long>+;
-// import funcs -- 1 column 
-#pragma link C++ function util_df::Import::Import1<int>+;
-#pragma link C++ function util_df::Import::Import1<double>+;
-#pragma link C++ function util_df::Import::Import1<unsigned int>+;
-#pragma link C++ function util_df::Import::Import1<unsigned long>+;
-#pragma link C++ function util_df::Import::Import1<unsigned long long>+;
-#pragma link C++ function util_df::Import::Import1<signed int>+;
-#pragma link C++ function util_df::Import::Import1<signed long>+;
-#pragma link C++ function util_df::Import::Import1<signed long long>+;
-// 2 columns -- add what you need here...  
-#pragma link C++ function util_df::Import::Import2<int,int>+;
-#pragma link C++ function util_df::Import::Import2<int,double>+;
-#pragma link C++ function util_df::Import::Import2<double,int>+;
-#pragma link C++ function util_df::Import::Import2<double,double>+;
+// // import funcs -- 1 column 
+// #pragma link C++ function util_df::Import::Import1<int>+;
+// #pragma link C++ function util_df::Import::Import1<double>+;
+// #pragma link C++ function util_df::Import::Import1<unsigned int>+;
+// #pragma link C++ function util_df::Import::Import1<unsigned long>+;
+// #pragma link C++ function util_df::Import::Import1<unsigned long long>+;
+// #pragma link C++ function util_df::Import::Import1<signed int>+;
+// #pragma link C++ function util_df::Import::Import1<signed long>+;
+// #pragma link C++ function util_df::Import::Import1<signed long long>+;
+// // 2 columns -- add what you need here...  
+// #pragma link C++ function util_df::Import::Import2<int,int>+;
+// #pragma link C++ function util_df::Import::Import2<int,double>+;
+// #pragma link C++ function util_df::Import::Import2<double,int>+;
+// #pragma link C++ function util_df::Import::Import2<double,double>+;
 // mean
 #pragma link C++ function util_df::Math::GetMean<int>+;  
 #pragma link C++ function util_df::Math::GetMean<double>+;  

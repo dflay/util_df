@@ -21,7 +21,14 @@ namespace util_df{
    int TemperatureSensor::LoadData(){
       std::string fileType = "csv";
       std::string inpath   = fPrefix + "/" + fName + "." + fileType;
-      int rc = Import::ImportData2<double,double>(inpath,fileType,fT,fR);
+
+      // int rc = Import::ImportData2<double,double>(inpath,fileType,fT,fR);
+      CSVManager *data = new CSVManager("csv"); 
+      int rc = data->ReadFile(inpath.c_str(),true);
+      data->GetColumn_byIndex<double>(0,fT); 
+      data->GetColumn_byIndex<double>(1,fR); 
+      delete data;
+
       if(rc==0){
 	 if(fName.compare("USP17464")==0){
 	    // this data set is backwards from the PT1000 data  

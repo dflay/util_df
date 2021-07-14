@@ -14,6 +14,7 @@
 #include "UtilDFGraph.hh"
 #include "UtilDFAlgorithm.hh"
 #include "UtilDFImport.hh"
+#include "CSVManager.hh"
 
 namespace util_df{
    //______________________________________________________________________________
