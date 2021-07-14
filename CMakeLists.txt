@@ -49,6 +49,8 @@ find_package(ROOT REQUIRED)
 # Define useful ROOT functions and macros (e.g. ROOT_GENERATE_DICTIONARY)
 include(${ROOT_USE_FILE})
 
+MESSAGE(STATUS "Found ROOT: " $ENV{ROOTSYS})
+
 #----------------------------------------------------------------------------
 # Library
 # add_library(${PACKAGE} SHARED ${src} ${allheaders} ${PACKAGE}Dict.cxx)
