@@ -43,9 +43,9 @@ list(TRANSFORM allheaders PREPEND "${CMAKE_CURRENT_LIST_DIR}/include/")
 
 #----------------------------------------------------------------------------
 # Find ROOT 
-set(ROOT_VER 6.22) 
+# set(ROOT_VER 6.22) 
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
-find_package(ROOT ${ROOT_VER} REQUIRED)
+find_package(ROOT REQUIRED)
 # Define useful ROOT functions and macros (e.g. ROOT_GENERATE_DICTIONARY)
 include(${ROOT_USE_FILE})
 
