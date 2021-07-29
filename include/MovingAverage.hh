@@ -6,7 +6,7 @@
 #include <vector>  
 
 namespace util_df {
-   namespace algorithm { 
+   namespace Algorithm { 
 
       template <class T> 
 	 class MovingAverage{
