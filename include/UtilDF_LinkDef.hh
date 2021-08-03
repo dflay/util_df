@@ -13,6 +13,10 @@
 #pragma link C++ namespace util_df::Import+; 
 #pragma link C++ namespace util_df::Export+; 
 #pragma link C++ namespace util_df::Algorithm+;
+#pragma link C++ namespace util_df::EnergyLoss+;
+#pragma link C++ namespace util_df::Radiation+;
+#pragma link C++ namespace util_df::Constants+; 
+#pragma link C++ namespace util_df::Units+; 
 
 // we need to explicitly define which data types we want for the templated functions 
 // binary read 

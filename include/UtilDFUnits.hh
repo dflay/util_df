@@ -6,16 +6,21 @@
 namespace util_df {
  
    namespace Units {
-
+      // unit system
      enum unitClass{
 	 kCGS,
 	 kMKS
       };
-
+     // magnetic field
      enum bFieldUnits { 
 	kTesla,
 	kGauss
      };
+     // radiation
+     enum radiationUnits {
+	Gy,
+	rad
+     }; 
 
    } //::units 
 

@@ -29,12 +29,14 @@ namespace util_df {
 	 kGlass
       }; 
 
-      enum unitClass{
-	 kCGS,
-	 kMKS
-      };
-
       static const int FTSIZE           = 1E+7; 
+
+      const static double second        = 1.;
+      const static double minute        = 60.*second;
+      const static double hour          = 60.*minute;
+      const static double day           = 24.*hour;
+
+      const static double joule_per_gev = 1.60218E-10;
 
       static const double alpha         = 1.0/137.0359895;
       static const double PI            = 3.14159265;

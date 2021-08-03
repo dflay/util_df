@@ -23,6 +23,7 @@ set(src
   UtilDFHistogram.cpp
   UtilDFImport.cpp
   UtilDFMath.cpp
+  UtilDFRadiation.cpp
   )
 
 # headers
