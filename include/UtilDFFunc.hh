@@ -25,6 +25,13 @@ namespace util_df{
    int SplitString(const char delim,const std::string myStr,std::vector<std::string> &out);
    int SplitString_whiteSpace(const std::string myStr,std::vector<std::string> &out); 
    int MakeClass(const char *path,const char *className,const char *treeName="T");  
+   char *BinaryToAscii(int N,int binary_data[]);
+   int GetBit16(int k,u_int16_t data); 
+   int GetBit32(int k,u_int32_t data); 
+   int HexToBinary(char hex[]);
+   unsigned int BinaryToHex16(int binary[]);
+   unsigned long BinaryToHex32(int binary[]); 
+   void AsciiToBinary(int N,char *ascii,int binary[]); 
 } // ::util_df
 
 #endif 
