@@ -29,6 +29,7 @@ namespace util_df{
    int GetBit16(int k,u_int16_t data); 
    int GetBit32(int k,u_int32_t data); 
    int HexToBinary(char hex[]);
+   int HexToDecimal(char hex[]); 
    unsigned int BinaryToHex16(int binary[]);
    unsigned long BinaryToHex32(int binary[]); 
    void AsciiToBinary(int N,char *ascii,int binary[]); 

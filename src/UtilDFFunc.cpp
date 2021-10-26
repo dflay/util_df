@@ -245,6 +245,22 @@ namespace util_df {
       return binary;
    }
    //______________________________________________________________________________
+   int HexToDecimal(char hex[]){
+      int len = std::strlen(hex);
+      int base = 1;
+      int temp = 0;
+      for (int i=len-1; i>=0; i--) {
+	 if(hex[i]>='0' && hex[i]<='9'){
+	    temp += (hex[i] - 48)*base;
+	    base = base*16;
+	 }else if(hex[i]>='A' && hex[i]<='F'){
+	    temp += (hex[i] - 55)*base;
+	    base = base*16;
+	 }
+      }
+      return temp;
+   } 
+   //______________________________________________________________________________
    unsigned int BinaryToHex16(int binary[]){
       const int NBITS = 16; 
       int pwr[NBITS]; 
