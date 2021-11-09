@@ -71,17 +71,33 @@ namespace util_df{
       //______________________________________________________________________________
       TGraph *GetTGraph(CSVManager *data,std::string xAxis,std::string yAxis){
 	 std::vector<double> x,y;
-	 data->GetColumn_byName<double>(xAxis,x); 
 	 data->GetColumn_byName<double>(yAxis,y); 
+
+         const int N = y.size();
+         if(xAxis.compare("ENTRY_INDEX")==0){
+	    // x axis is the entry index
+	    for(int i=0;i<N;i++) x.push_back(i);
+         }else{
+	    data->GetColumn_byName<double>(xAxis,x); 
+         }
+
 	 TGraph *g = GetTGraph(x,y);
 	 return g;
       }
       //______________________________________________________________________________
       TGraph *GetTGraphErrors(CSVManager *data,std::string xAxis,std::string yAxis,std::string yAxisErr){
 	 std::vector<double> x,y,ey;
-	 data->GetColumn_byName<double>(xAxis   ,x); 
 	 data->GetColumn_byName<double>(yAxis   ,y); 
-	 data->GetColumn_byName<double>(yAxisErr,ey); 
+	 data->GetColumn_byName<double>(yAxisErr,ey);
+
+         const int N = y.size();
+         if(xAxis.compare("ENTRY_INDEX")==0){
+	    // x axis is the entry index
+	    for(int i=0;i<N;i++) x.push_back(i);
+         }else{
+	    data->GetColumn_byName<double>(xAxis,x); 
+         }
+ 
 	 TGraphErrors *g = GetTGraphErrors(x,y,ey);
 	 return g;
       }
