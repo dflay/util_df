@@ -10,8 +10,13 @@
 #include "TH2F.h"
 #include "TMath.h"
 
+#include "UtilDFMath.hh"
+#include "CSVManager.hh"
+
 namespace util_df { 
    namespace Histogram {
+      TH1F *GetTH1F(CSVManager *data,const char *var,int NBin,double min=-1,double max=-1); 
+      TH1F *GetTH1F(const char *name,std::vector<double> x,int NBin,double min=-1,double max=-1);
       double GetSum(TH1F *h,double min,double max);
       double GetIntegral(TH1F *h);
       double GetIntegral(TH1F *h,double min,double max);

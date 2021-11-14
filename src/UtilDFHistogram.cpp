@@ -3,6 +3,36 @@
 namespace util_df {
    namespace Histogram { 
       //______________________________________________________________________________
+      TH1F *GetTH1F(CSVManager *data,const char *var,int NBin,double min,double max){
+	 // create a TH1F object from a CSVManager object 
+	 std::vector<double> x; 
+	 data->GetColumn_byName<double>(var,x);
+         TH1F *h = GetTH1F(var,x,NBin,min,max);
+	 return h; 
+      }
+      //______________________________________________________________________________
+      TH1F *GetTH1F(const char *name,std::vector<double> x,int NBin,double min,double max){
+         // create a TH1F object from an input vector
+         // determine the bounds min and max if necessary 
+	 TString hName  = Form("h%s",name);
+	 TString hTitle = Form("%s" ,name);
+
+	 // if min and max are < 0, determine from stats of vector 
+	 double mean  = Math::GetMean<double>(x);
+	 double stdev = Math::GetStandardDeviation<double>(x);
+	 if(min<0&&max<0){
+	    min = mean - 5.*stdev;
+	    max = mean + 5.*stdev;
+	 }
+
+	 TH1F *h = new TH1F(hName,hTitle,NBin,min,max);
+
+	 const int N = x.size();
+	 for(int i=0;i<N;i++) h->Fill(x[i]);
+
+	 return h;
+      }
+      //______________________________________________________________________________
       double GetSum(TH1F *h,double min,double max){
 	 // Compute sum of counts in a histogram between min and max
 	 // first find bin numbers corresponding to our range 

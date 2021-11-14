@@ -112,7 +112,11 @@ namespace util_df {
 	       int NROW = fData.size();
 	       T elem;
 	       for(int i=0;i<NROW;i++){
-		  elem = GetElement<T>(i,colIndex);
+		  if(colIndex>=0){
+		     elem = GetElement<T>(i,colIndex);
+                  }else{
+		     elem = (T)i;  // entry index 
+                  }
 		  data.push_back(elem);
 	       }
 	       return 0;
@@ -122,6 +126,12 @@ namespace util_df {
 	    int GetColumn_byName(std::string colName,std::vector<T> &data){
 	       // find the column index by name 
 	       int NCOL=0,NROW=0,k=-1;
+               // if the user just wants the entry index 
+               if(colName.compare("ENTRY_INDEX")==0){
+                  GetColumn_byIndex<T>(-1,data);
+		  return 0; 
+               }
+	       // everything else
 	       if(fHeaderExists){
 		  NCOL = fHeader.size();
 		  for(int i=0;i<NCOL;i++) if(fHeader[i].compare(colName)==0) k = i;
