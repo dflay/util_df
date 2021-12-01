@@ -46,10 +46,10 @@ namespace util_df {
                                  int color=kBlue,int style=3001,double alpha=0.35);
 
       TGraph *GetTGraph(CSVManager *data,std::string xAxis,std::string yAxis); 
-      TGraph *GetTGraphErrors(CSVManager *data,std::string xAxis,std::string yAxis,std::string yAxisErr);
+      TGraphErrors *GetTGraphErrors(CSVManager *data,std::string xAxis,std::string yAxis,std::string yAxisErr);
 
       TGraph *GetTGraph(CSVManager *data,int xIndex,int yIndex); 
-      TGraph *GetTGraphErrors(CSVManager *data,int xIndex,int yIndex,int eyIndex);
+      TGraphErrors *GetTGraphErrors(CSVManager *data,int xIndex,int yIndex,int eyIndex);
 
       TGraph *GetTGraphDifference(const int NPTS,TGraph *g1,TGraph *g2); 
 

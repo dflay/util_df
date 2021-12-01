@@ -85,7 +85,7 @@ namespace util_df{
 	 return g;
       }
       //______________________________________________________________________________
-      TGraph *GetTGraphErrors(CSVManager *data,std::string xAxis,std::string yAxis,std::string yAxisErr){
+      TGraphErrors *GetTGraphErrors(CSVManager *data,std::string xAxis,std::string yAxis,std::string yAxisErr){
 	 std::vector<double> x,y,ey;
 	 data->GetColumn_byName<double>(yAxis   ,y); 
 	 data->GetColumn_byName<double>(yAxisErr,ey);
@@ -110,7 +110,7 @@ namespace util_df{
 	 return g;
       }
       //______________________________________________________________________________
-      TGraph *GetTGraphErrors(CSVManager *data,int xIndex,int yIndex,int eyIndex){
+      TGraphErrors *GetTGraphErrors(CSVManager *data,int xIndex,int yIndex,int eyIndex){
 	 std::vector<double> x,y,ey;
 	 data->GetColumn_byIndex<double>(xIndex,x); 
 	 data->GetColumn_byIndex<double>(yIndex,y); 
