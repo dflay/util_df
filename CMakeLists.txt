@@ -13,6 +13,7 @@ set(src
   ABA.cpp
   Blinder.cpp
   CSVManager.cpp
+  JSONManager.cpp
   FourierTransform.cpp
   MovingAverage.cpp
   TemperatureSensor.cpp
