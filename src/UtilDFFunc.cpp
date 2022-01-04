@@ -296,4 +296,37 @@ namespace util_df {
       unsigned long hex = (unsigned long)dec;
       return hex; 
    }
+   //______________________________________________________________________________
+   double GetKelvin_fromC(double T_c){
+      double T_k = T_c + Constants::Kelvin;
+      return T_k;
+   }
+   //______________________________________________________________________________
+   double GetKelvin_fromF(double T_f){
+      double T_c = GetDegreesC_fromF(T_f);
+      double T_k = GetKelvin_fromC(T_c); 
+      return T_k; 
+   }
+   //______________________________________________________________________________
+   double GetDegreesC_fromK(double T_k){
+      double T_c = T_k - Constants::Kelvin; 
+      return T_c; 
+   }
+   //______________________________________________________________________________
+   double GetDegreesC_fromF(double T_f){
+      double T_c = (T_f - 32.)/1.8;
+      return T_c;  
+   } 
+   //______________________________________________________________________________
+   double GetDegreesF_fromC(double T_c){
+      double T_f = T_c*1.8 + 32;
+      return T_f;  
+   }
+   //______________________________________________________________________________
+   double GetDegreesF_fromK(double T_k){
+      double T_c = GetDegreesC_fromK(T_k); 
+      double T_f = GetDegreesF_fromC(T_c);
+      return T_f; 
+   }
+    
 } // ::util_df

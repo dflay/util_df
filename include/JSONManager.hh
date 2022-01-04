@@ -65,7 +65,6 @@ namespace util_df {
 	       } 
 	       return 0;
          }
- 
 
    }; 
 

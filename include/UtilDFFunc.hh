@@ -16,6 +16,8 @@
 #include "TTree.h"
 #include "TFile.h"
 
+#include "UtilDFConstants.hh"
+
 namespace util_df{
    std::string GetStringTimeStampFromUTC(unsigned long unix_time); 
    unsigned long int GetUTCTimeStampFromString(std::string timeStamp,bool isDST=false);
@@ -33,6 +35,12 @@ namespace util_df{
    unsigned int BinaryToHex16(int binary[]);
    unsigned long BinaryToHex32(int binary[]); 
    void AsciiToBinary(int N,char *ascii,int binary[]); 
+   double GetKelvin_fromC(double T_c);
+   double GetKelvin_fromF(double T_f);
+   double GetDegreesC_fromK(double T_k);
+   double GetDegreesC_fromF(double T_f);
+   double GetDegreesF_fromC(double T_c);
+   double GetDegreesF_fromK(double T_k);
 } // ::util_df
 
 #endif 

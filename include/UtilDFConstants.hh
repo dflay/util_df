@@ -29,7 +29,9 @@ namespace util_df {
 	 kGlass
       }; 
 
-      static const int FTSIZE           = 1E+7; 
+      const static int FTSIZE           = 1E+7;
+
+      const static double Kelvin        = 274.15;           // 1 deg C = 274.15 K       
 
       const static double second        = 1.;
       const static double minute        = 60.*second;
