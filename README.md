@@ -20,7 +20,7 @@ There are two main branches for this library.  Below is a brief description of t
 
 ## Building the Library 
 
-To build the library, create `build` and `install` diretories in parallel to the `util_df` directory.  
+To build the library, create `build` and `install` directories in parallel to the `util_df` directory.  
 Change to the `build` directory.  Copy the `build.sh` script from the `util_df` directory to the 
 `build` directory. Execute `./build.sh`.  This will configure your environment, make, and install 
 the library.  Before running the `build.sh` script, make sure your directory names match what is 
