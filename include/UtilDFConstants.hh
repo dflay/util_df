@@ -45,7 +45,9 @@ namespace util_df {
 
       static const double h_bar         = 1.054571817E-34;  // [Joule-sec]
       static const double k_Boltzmann   = 1.380649E-23;     // [Joule/Kelvin] 
-      static const double N_Avogadro    = 6.022E+23;  
+      static const double N_Avogadro    = 6.022E+23; 
+
+      static const double atmosphere    = 101325;           // 1 atm = 101325 Pascals; 1 Pa = N/m^2 = 1 kg m/s^2 = J/m^3   
 
       static const double radian        = 1.; 
       static const double deg           = 0.017453293;      // 1 deg = pi/180 radians 
