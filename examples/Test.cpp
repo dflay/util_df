@@ -11,7 +11,20 @@
 #include "UtilDFMath.hh"
 #include "UtilDFCrossSection.hh"
 
+int testXS(); 
+int testCSV(); 
+int testJSON(); 
+
 int Test(){
+
+   testXS(); 
+   testCSV();
+   testJSON();
+
+   return 0;
+}
+//______________________________________________________________________________
+int testXS(){
 
    // luminosity for a LD2 target (per nucleon)  
    double A   = 2;           // number of nucleons (= Z + N)  
@@ -20,6 +33,11 @@ int Test(){
    double x = 15.0;   // 15 cm thick 
    double L = util_df::CrossSection::GetLuminosity(I,rho,x,A);
    std::cout << Form("Target = LD2, I_beam = %.1E A, x = %.1lf cm, Lumi = %.3E cm^-2 s^-1",I,x,L) << std::endl;
+
+   return 0;
+}
+//______________________________________________________________________________
+int testCSV(){
 
    // read data from a csv file and make a plot 
    util_df::CSVManager *myCSV = new util_df::CSVManager(); 
@@ -40,28 +58,6 @@ int Test(){
    double sy = util_df::Math::GetStandardDeviation<double>(Y); 
    std::cout << Form("y stats: mean = %.3lf, stdev = %.3lf",my,sy) << std::endl; 
 
-   // read a JSON file
-   util_df::JSONManager *myJSON = new util_df::JSONManager();
-   myJSON->ReadFile("./input/data.json"); 
-   myJSON->Print(); 
-
-   std::string v1 = myJSON->GetValueFromKey_str("key-01"); 
-   double v2      = myJSON->GetValueFromKey<double>("key-02"); 
-   double v3      = myJSON->GetValueFromKey<double>("key-03"); 
-   double v4      = myJSON->GetValueFromSubKey<double>("key-04","subkey"); 
-
-   int NPTS = myJSON->GetValueFromKey<int>("npts");
-   std::vector<int> vv; 
-   myJSON->GetVectorFromKey<int>("key-05",NPTS,vv);
-   std::vector<int> vv2; 
-   myJSON->GetVectorFromKey<int>("key-06",NPTS,vv2);
-   
-   std::cout << Form("JSON data: key-01: %s, key-02: %.2lf, key-03: %.2lf, key-04: %.2lf",v1.c_str(),v2,v3,v4) << std::endl;
-
-   std::cout << "Vector from key-05: " << std::endl; 
-   for(int i=0;i<NPTS;i++) std::cout << vv[i] << std::endl;  
-   std::cout << "Vector from key-06: " << std::endl; 
-   for(int i=0;i<NPTS;i++) std::cout << vv2[i] << std::endl;   
  
    // create graphs    
    TGraph *g = util_df::Graph::GetTGraph(X,Y); 
@@ -88,6 +84,34 @@ int Test(){
 
    delete myCSV;
    delete myCSV2;
+
+   return 0;
+}
+//______________________________________________________________________________
+int testJSON(){
+
+   // read a JSON file
+   util_df::JSONManager *myJSON = new util_df::JSONManager();
+   myJSON->ReadFile("./input/data.json"); 
+   myJSON->Print(); 
+
+   std::string v1 = myJSON->GetValueFromKey_str("key-01"); 
+   double v2      = myJSON->GetValueFromKey<double>("key-02"); 
+   double v3      = myJSON->GetValueFromKey<double>("key-03"); 
+   double v4      = myJSON->GetValueFromSubKey<double>("key-04","subkey"); 
+
+   int NPTS = myJSON->GetValueFromKey<int>("npts");
+   std::vector<int> vv; 
+   myJSON->GetVectorFromKey<int>("key-05",NPTS,vv);
+   std::vector<int> vv2; 
+   myJSON->GetVectorFromKey<int>("key-06",NPTS,vv2);
+   
+   std::cout << Form("JSON data: key-01: %s, key-02: %.2lf, key-03: %.2lf, key-04: %.2lf",v1.c_str(),v2,v3,v4) << std::endl;
+
+   std::cout << "Vector from key-05: " << std::endl; 
+   for(int i=0;i<NPTS;i++) std::cout << vv[i] << std::endl;  
+   std::cout << "Vector from key-06: " << std::endl; 
+   for(int i=0;i<NPTS;i++) std::cout << vv2[i] << std::endl;   
    delete myJSON; 
 
    return 0;
