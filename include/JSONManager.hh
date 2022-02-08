@@ -52,10 +52,10 @@ namespace util_df {
 	 // templated methods 
 	 template <typename T> T GetValueFromKey(std::string key) const {
 	    // this function is to retrieve a number, but could be stored as a string in the JSON object 
-            std::string DATA="";
             T val; 
             int outDataType = CheckType<T>(val); 
             bool exist = DoesKeyExist(key);
+            std::string DATA="";
 	    if(exist){ 
 	       // key exists 
 	       if( fObject[key].is_string() ){
@@ -76,10 +76,10 @@ namespace util_df {
 
 	 template <typename T> T GetValueFromSubKey(std::string key,std::string subKey) const {
 	    // this function is to retrieve a number, but could be stored as a string in the JSON object 
-            std::string DATA="";
             T val; 
             int outDataType = CheckType<T>(val); 
             bool exist = DoesKeyExist(key);
+            std::string DATA="";
 	    if(exist){ 
 	       // key exists 
 	       if( fObject[key][subKey].is_string() ){
@@ -100,19 +100,14 @@ namespace util_df {
 
          template <typename T> 
 	    int GetVectorFromKey(std::string key,int N,std::vector<T> &data){
-               std::string DATA="";
-               // first check if the key exists
 	       T arg;
 	       int outDataType = CheckType<T>(arg); 
+               std::string DATA="";
+               // first check if the key exists
 	       bool exist = DoesKeyExist(key);
 	       if(exist){
 		  // found the key, fill the vector
 		  for(int i=0;i<N;i++){
-                     // DATA = fObject[key][i];
-                     // arg = GetValueFromSubKey<T>(key,i);  
-		     // DATA = fObject[key][i].get<std::string>(); // fObject[key];  
-		     // if(dataType==Constants::kInteger) arg = std::atoi( DATA.c_str() ); 
-		     // if(dataType==Constants::kDouble)  arg = std::atof( DATA.c_str() );
 		     if( fObject[key][i].is_string() ){
 			// data is a string type, convert to int or double 
 			DATA = fObject[key][i].get<std::string>(); 
