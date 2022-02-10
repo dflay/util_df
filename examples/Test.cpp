@@ -100,15 +100,15 @@ int testJSON(){
    double v3      = myJSON->GetValueFromKey<double>("key-03"); 
    double v4      = myJSON->GetValueFromSubKey<double>("key-04","subkey"); 
 
-   int NPTS = myJSON->GetValueFromKey<int>("npts");
    std::vector<int> vv; 
-   myJSON->GetVectorFromKey<int>("key-05",NPTS,vv);
+   myJSON->GetVectorFromKey<int>("key-05",vv);
    std::vector<int> vv2; 
-   myJSON->GetVectorFromKey<int>("key-06",NPTS,vv2);
+   myJSON->GetVectorFromKey<int>("key-06",vv2);
    
    std::cout << Form("JSON data: key-01: %s, key-02: %.2lf, key-03: %.2lf, key-04: %.2lf",v1.c_str(),v2,v3,v4) << std::endl;
 
-   std::cout << "Vector from key-05: " << std::endl; 
+   std::cout << "Vector from key-05: " << std::endl;
+   const int NPTS = vv.size();  
    for(int i=0;i<NPTS;i++) std::cout << vv[i] << std::endl;  
    std::cout << "Vector from key-06: " << std::endl; 
    for(int i=0;i<NPTS;i++) std::cout << vv2[i] << std::endl;   

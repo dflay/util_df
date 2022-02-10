@@ -24,13 +24,13 @@ namespace util_df {
 	       if( std::is_arithmetic<T>::value ){
 		  if( std::is_integral<T>::value ){
 		     // it's an integer or boolean 
-		     rc = 0;
+		     rc = Constants::kInteger;
 		  }else{
 		     // it's a double or float 
-		     rc = 1;
+		     rc = Constants::kDouble;
 		  }
 	       }else{
-		  rc = 2; // it's a string
+		  rc = Constants::kString; // it's a string
 	       }
 	       return rc;
 	    }
@@ -44,7 +44,7 @@ namespace util_df {
 
          bool DoesKeyExist(std::string keyName) const;
 
-         int GetVectorFromKey_str(std::string key, int N, std::vector<std::string> &data);
+         int GetVectorFromKey_str(std::string key,std::vector<std::string> &data);
 
          std::string GetValueFromKey_str(std::string key) const; 
          std::string GetValueFromSubKey_str(std::string key,std::string subKey) const;   
@@ -99,14 +99,16 @@ namespace util_df {
          }
 
          template <typename T> 
-	    int GetVectorFromKey(std::string key,int N,std::vector<T> &data){
+	    int GetVectorFromKey(std::string key,std::vector<T> &data){
 	       T arg;
+               int N=0;
 	       int outDataType = CheckType<T>(arg); 
                std::string DATA="";
                // first check if the key exists
 	       bool exist = DoesKeyExist(key);
 	       if(exist){
 		  // found the key, fill the vector
+		  N = fObject[key].size();
 		  for(int i=0;i<N;i++){
 		     if( fObject[key][i].is_string() ){
 			// data is a string type, convert to int or double 
