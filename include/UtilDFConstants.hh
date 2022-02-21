@@ -61,7 +61,8 @@ namespace util_df {
       static const double proton_mass   = 0.9383;           // GeV 
       static const double pion_mass     = 0.140;            // GeV
 
-      static const double mu_0          = 1.2566371e-06;    // 4pi*1E-7
+      static const double mu_0          = 1.2566371E-06;    // 4pi*1E-7
+      static const double eps_0         = 8.8541878128E-12; // ± (13); in F/m  
 
       static const double mu_N          = 5.050783699E-27;  // nuclear magneton [Joule/Tesla] ± 31 in last two digits  
       static const double mu_B          = 9.274009994E-24;  // Bohr magneton [Joule/Tesla] ± 57 in last two digits  
